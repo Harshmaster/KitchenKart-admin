@@ -1,4 +1,5 @@
 import 'package:Admin_Panel/screens/orderDetailScreen.dart';
+import 'package:Admin_Panel/updateStatus.dart';
 import 'package:Admin_Panel/userFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -232,7 +233,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               'order placed') {
                                             try {
                                               Firestore.instance
-                                                  .collection('Orders')
+                                                  .collection('OrderStatus')
                                                   .document(
                                                     orderList["response"][index]
                                                         ["order_id"],
@@ -240,6 +241,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                                   .setData({
                                                 'status': 'order placed'
                                               });
+
+                                              updateStatusOnServer(
+                                                  orderList["response"][index]
+                                                      ["order_id"],
+                                                  'order placed');
                                             } catch (err) {
                                               print(err);
                                             }
@@ -247,13 +253,18 @@ class _OrderScreenState extends State<OrderScreen> {
                                           if (whatwaspressed == 'on the way') {
                                             try {
                                               Firestore.instance
-                                                  .collection('Orders')
+                                                  .collection('OrderStatus')
                                                   .document(
                                                     orderList["response"][index]
                                                         ["order_id"],
                                                   )
                                                   .setData(
                                                       {'status': 'on the way'});
+
+                                              updateStatusOnServer(
+                                                  orderList["response"][index]
+                                                      ["order_id"],
+                                                  'on the way');
                                             } catch (err) {
                                               print(err);
                                             }
@@ -261,13 +272,18 @@ class _OrderScreenState extends State<OrderScreen> {
                                           if (whatwaspressed == 'delivered') {
                                             try {
                                               Firestore.instance
-                                                  .collection('Orders')
+                                                  .collection('OrderStatus')
                                                   .document(
                                                     orderList["response"][index]
                                                         ["order_id"],
                                                   )
                                                   .setData(
                                                       {'status': 'delivered'});
+
+                                              updateStatusOnServer(
+                                                  orderList["response"][index]
+                                                      ["order_id"],
+                                                  'delivered');
                                             } catch (err) {
                                               print(err);
                                             }
@@ -279,6 +295,74 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ),
                                       ),
                                     ],
+                                  ),
+                                  Container(
+                                   
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'Change Payment Method',
+                                          style: TextStyle(
+                                            fontFamily: 'secondary',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        DropdownButton(
+                                          items: [
+                                            DropdownMenuItem(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text('Cash'),
+                                                ],
+                                              ),
+                                              value: 'order placed',
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text('Google-Pay'),
+                                                ],
+                                              ),
+                                              value: 'on the way',
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text('Paytm'),
+                                                ],
+                                              ),
+                                              value: 'delivered',
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text('PhonePe'),
+                                                ],
+                                              ),
+                                              value: 'delivered',
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text('Personal'),
+                                                ],
+                                              ),
+                                              value: 'delivered',
+                                            ),
+                                          ],
+                                          onChanged: (whatwaspressed) {
+         
+                                              updatePaymentMethod(orderList["response"][index]
+                                                        ["order_id"],whatwaspressed);
+
+                                          },
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

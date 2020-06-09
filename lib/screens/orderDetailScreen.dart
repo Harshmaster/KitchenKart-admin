@@ -2,6 +2,8 @@ import 'package:Admin_Panel/userFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../updateStatus.dart';
+
 class OrderDetailScreen extends StatefulWidget {
   final String urlParam;
   OrderDetailScreen({this.urlParam});
@@ -10,6 +12,8 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
+  final TextEditingController feedbackController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,8 +155,26 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                             fontFamily: 'secondary',
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
-                          ), 
+                          ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          controller: feedbackController,
+                          decoration: InputDecoration(
+                            labelText: 'ENTER FEEDBACK MESSAGE',
+                          ),
+                          maxLines: 4,
+                          minLines: 2,
+                        ),
+                        RaisedButton(
+                          child: Text('UPDATE'),
+                          onPressed: () {
+                            updateFeedBackMessage(
+                                widget.urlParam, feedbackController.text);
+                          },
+                        )
                       ],
                     ),
                   ),

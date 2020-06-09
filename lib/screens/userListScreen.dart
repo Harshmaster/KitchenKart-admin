@@ -1,15 +1,13 @@
 import 'package:Admin_Panel/userFunctions.dart';
 import 'package:flutter/material.dart';
 
-import 'package:Admin_Panel/widgets/appDrawer.dart';
-
 class UserListScreen extends StatefulWidget {
   @override
   _UserListScreenState createState() => _UserListScreenState();
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  @override
+  @override  
   Widget build(BuildContext context) {
     var appbar = AppBar(
       leading: IconButton(
