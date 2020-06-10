@@ -12,7 +12,7 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
-  final TextEditingController feedbackController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -160,21 +160,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        TextField(
-                          controller: feedbackController,
-                          decoration: InputDecoration(
-                            labelText: 'ENTER FEEDBACK MESSAGE',
-                          ),
-                          maxLines: 4,
-                          minLines: 2,
-                        ),
-                        RaisedButton(
-                          child: Text('UPDATE'),
-                          onPressed: () {
-                            updateFeedBackMessage(
-                                widget.urlParam, feedbackController.text);
-                          },
-                        )
                       ],
                     ),
                   ),

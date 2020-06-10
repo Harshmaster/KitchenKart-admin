@@ -5,10 +5,9 @@ import 'dart:convert';
 void updateStatusOnServer(String orderId, String status) async {
   String url =
       'http://ec2-13-232-236-5.ap-south-1.compute.amazonaws.com:3000/api/orders/status/${orderId.toString()}';
-  var res = await http.put(
-    url,
-    body: {"status": status},
-  );
+  var res = await http.put(url,
+      body: json.encode({"status": status}),
+      headers: {"Content-Type": 'application/json'});
   Map<String, dynamic> response = await json.decode(res.body);
   print(response);
 }
@@ -16,10 +15,9 @@ void updateStatusOnServer(String orderId, String status) async {
 void updatePaymentMethod(String orderId, String paymentMethod) async {
   String url =
       'http://ec2-13-232-236-5.ap-south-1.compute.amazonaws.com:3000/api/orders/status/${orderId.toString()}';
-  var res = await http.put(
-    url,
-    body: {"paymentMethod": paymentMethod},
-  );
+  var res = await http.put(url,
+      body: json.encode({"paymentMethod": paymentMethod}),
+      headers: {"Content-Type": 'application/json'});
   Map<String, dynamic> response = await json.decode(res.body);
   print(response);
 
@@ -31,14 +29,14 @@ void updatePaymentMethod(String orderId, String paymentMethod) async {
       .updateData({'paymentMethod': paymentMethod});
 }
 
-
-void updateFeedBackMessage(String orderId,String message) async {
-String url =
+void updateFeedBackMessage(String orderId, String message) async {
+  String url =
       'http://ec2-13-232-236-5.ap-south-1.compute.amazonaws.com:3000/api/orders/feedback/${orderId.toString()}';
-  var res = await http.put(
-    url,
-    body: {"feedback": message},
-  );
+  var res = await http.put(url,
+      body: json.encode(
+        {"feedback": message},
+      ),
+      headers: {"Content-Type": 'application/json'});
   Map<String, dynamic> response = await json.decode(res.body);
   print(response);
 }
