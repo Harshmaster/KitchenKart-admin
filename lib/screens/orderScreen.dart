@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Admin_Panel/screens/SingleOrderCardWidget.dart';
 import 'package:Admin_Panel/screens/orderDetailScreen.dart';
 import 'package:Admin_Panel/updateStatus.dart';
@@ -5,7 +7,7 @@ import 'package:Admin_Panel/userFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Admin_Panel/widgets/appDrawer.dart';
-
+import 'package:http/http.dart' as http;
 import '../userFunctions.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -15,6 +17,25 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   final TextEditingController feedbackController = TextEditingController();
+
+  fetchData() async {
+    const url =
+        'http://ec2-13-232-236-5.ap-south-1.compute.amazonaws.com:3000/api/orders';
+
+    await http.get(url).then((response) {
+      final tempList = json.decode(response.body) as Map<String, dynamic>;
+      print('order working');
+      orderList = tempList;
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     var appbar = AppBar(
